@@ -11,10 +11,16 @@ class Takeway
 		def initialize
 			@menu = MENU
 		end
-
-		def validate_order(order)
+		
+		def validate_order(order,estimation)
 			raise "RuntimeError" if order.empty?
-			true
+			total = 0
+			order.each do |dish,amount|
+				total += @menu[dish] * amount
+			end
+			raise "RuntimeError" if total != estimation
+			#"Thank you! Your order was placed and will be delivered before 18:52"
+			total
 		end
 
 

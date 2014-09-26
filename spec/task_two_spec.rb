@@ -11,11 +11,16 @@ describe Takeway do
 
 	it "should raise an error if the order is empty" do
 		empty_order = {}
-		expect{ takeway.validate_order(empty_order) }.to raise_error("RuntimeError")
+		expect{ takeway.validate_order(empty_order,45) }.to raise_error("RuntimeError")
 	end
 
-	it "should be able to validate and order" do
-		expect(takeway.validate_order(order)).to eq true
+	it "should be able to calculate the exact total of the order" do
+		expect(takeway.validate_order(order,45)).to eq 45
+	end
+
+	it "should raise error if total doesn't match clients calculation" do
+		client_estimation = 44
+		expect{ takeway.validate_order(order,client_estimation) }.to raise_error("RuntimeError")
 	end
 
 end
