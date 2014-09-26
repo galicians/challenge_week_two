@@ -1,4 +1,4 @@
-require 'task_two'
+require 'takeaway'
 
 describe Takeway do
 
