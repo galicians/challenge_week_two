@@ -14,9 +14,14 @@ class Customer
 		@orders = []
 	end
 
-	def makes_order(order,100)
-		takeaway.validate_order(order,100)
+	def makes_order
 	end
+
+
+
+	# def makes_order(order,100)
+	# 	takeaway.validate_order(order,100)
+	# end
 
 end
 

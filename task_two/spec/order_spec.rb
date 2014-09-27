@@ -39,4 +39,8 @@ describe Order do
 		expect(order.calculate_total).to be 248
 	end
 
+	it "should know when it's empty" do
+		expect(order.empty?).to be true
+	end
+
 end

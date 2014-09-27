@@ -1,31 +1,35 @@
 
 
 
+class Takeaway
 
-class Takeway
 
-	MENU = {"Onion rings" => 3, 
-		"Soup of the day" => 7,
-		"Filet" => 10,
-		"Cheese Burger" => 9,
-		"Cheese Pizza"=> 10}
+	attr_accessor :customers, :menu
 
-		attr_accessor :menu
+	def initialize
+		@customers = []
+		@menu = []
+	end
 
-		def initialize
-			@menu = MENU
+	def placing_order(phone_number,phone_order)
+		customer_identification(phone_number)
+		raise 'RuntimeError' if phone_order.empty?
+		# phone_order.each do |dish,quantity|
+		# 	Line_item.new(dish,quantity) if dish_in_menu?(dish)
+	end
+
+
+	def customer_identification(phone_number)
+		@customers.each do |customer|
+			return customer if customer.phone_number == phone_number
 		end
-		
-		def validate_order(order,estimation)
-			raise "RuntimeError" if order.empty?
-			total = 0
-			order.each do |dish,amount|
-				total += @menu[dish] * amount
-			end
-			raise "RuntimeError" if total != estimation
-			#"Thank you! Your order was placed and will be delivered before 18:52"
-			total
-		end
+		@customers << Customer.new(phone_number)
+	end
 
-
+	def dish_in_menu?(dish)
+		menu.include?(dish)
+	end
+	
+	
+	
 end

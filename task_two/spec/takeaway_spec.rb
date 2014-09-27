@@ -1,26 +1,44 @@
 require 'takeaway'
 
-describe Takeway do
+describe Takeaway do
 
-	let(:takeway) { Takeway.new }
-	order = {"Onion rings" => 1, "Soup of the day" => 2,"Filet" => 1,"Cheese Burger" => 2}
-	
-	it "should keep a list of dishes and prices" do
-		expect(takeway.menu.class).to eq(Hash)
+	let(:takeaway) { Takeaway.new }
+	let(:menu) { double :menu, list: paella}
+	let(:paella) {double :dish, name: 'paella', price: 15}
+	let(:order) {double :order, empty?: true}
+	let(:customer) {double :customer, phone_number: 7777}
+
+	it "should provide a list of customers" do
+		20.times { takeaway.customers << customer }
+		expect( takeaway.customers.size ).to eq 20
+	end
+
+	it "should provide a list dishes and prices" do
+		takeaway.menu << paella
+		expect(takeaway.menu).to eq [paella]
+	end
+
+	it "should identify if the number of the incoming call belongs to an existing customer" do
+		takeaway.customers << customer
+		expect(takeaway.customer_identification(7777)).to be customer
+	end
+
+	it "should create a new customer if there is no match for the phone number" do
+		takeaway.customer_identification(8888)
+		expect(takeaway.customers.size).to be 1
 	end
 
 	it "should raise an error if the order is empty" do
-		empty_order = {}
-		expect{ takeway.validate_order(empty_order,45) }.to raise_error("RuntimeError")
+		expect{ takeaway.placing_order(7777,order) }.to raise_error("RuntimeError")
 	end
 
-	it "should be able to calculate the exact total of the order" do
-		expect(takeway.validate_order(order,45)).to eq 45
+	it "will check if the customer dishes are in the menu" do
+		takeaway.menu << paella
+		takeaway.dish_in_menu?(paella)
 	end
 
-	it "should raise error if total doesn't match clients calculation" do
-		client_estimation = 44
-		expect{ takeway.validate_order(order,client_estimation) }.to raise_error("RuntimeError")
-	end
+
+
+
 
 end

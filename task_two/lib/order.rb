@@ -27,4 +27,9 @@ class Order
 		@list.each { |dish, quantity| @total += dish.price * quantity}
 		@total
 	end
+
+	def empty?
+		@list.empty?
+	end
+
 end
