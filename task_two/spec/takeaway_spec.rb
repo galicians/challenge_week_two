@@ -8,6 +8,14 @@ describe Takeaway do
 	let(:burrito) {double :dish, name: 'burrito', price: 5}
 	let(:phone_order) {double :order, empty?: true}
 	let(:customer) {double :customer, phone_number: 7777}
+	let(:pablo) {double :customer, name: 'Pablo', phone_number: 2222,orders: []}
+	let(:sender) {double :message, body: 'message',number: 121}
+
+	def menu_update
+		takeaway.menu << paella
+		takeaway.menu << burrito
+	end
+
 
 	it "should provide a list of customers" do
 		20.times { takeaway.customers << customer }
@@ -40,18 +48,37 @@ describe Takeaway do
 
 	it "will create a object order with all the lineitems received from the customer" do
 		customer_order = {paella => 2, burrito => 3}
-		takeaway.menu << paella
-		takeaway.menu << burrito
+		menu_update
 		expect(takeaway.create_order(customer_order).list.size).to be 2
 	end
 
 	it "will calculate the total of the order" do
 		customer_order = {paella => 2, burrito => 3}
-		takeaway.menu << paella
-		takeaway.menu << burrito
+		menu_update
 		order = takeaway.create_order(customer_order)
-		expect(takeaway.order_total(order)).to eq 45
+		expect(takeaway.total(order)).to eq 45
 	end 
+
+	it "will assign the order to the right customer" do
+		customer_order = {paella => 2, burrito => 3}
+		menu_update
+		takeaway.customers << pablo
+		# allow(pablo).to receive(:orders)
+		expect(pablo).to receive(:orders)
+		takeaway.sender = sender
+		expect(sender).to receive(:send)
+		takeaway.placing_order(2222,customer_order)
+		# expect(pablo).to receive(:orders)
+	end
+
+	it "will send a message confirmation" do
+		customer_order = {paella => 2, burrito => 3}
+		menu_update
+		takeaway.sender = sender
+		expect(sender).to receive(:send)
+		# allow(sender1).to receive(:message,:number)
+		takeaway.placing_order(1100,customer_order)
+	end
 
 
 

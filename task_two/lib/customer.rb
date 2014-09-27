@@ -14,9 +14,7 @@ class Customer
 		@orders = []
 	end
 
-	def makes_order
-	end
-
+	
 
 
 	# def makes_order(order,100)
