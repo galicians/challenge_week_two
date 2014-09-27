@@ -3,9 +3,10 @@ require 'takeaway'
 describe Takeaway do
 
 	let(:takeaway) { Takeaway.new }
-	let(:menu) { double :menu, list: paella}
+	let(:menu) { double :menu, list: paella }
 	let(:paella) {double :dish, name: 'paella', price: 15}
-	let(:order) {double :order, empty?: true}
+	let(:burrito) {double :dish, name: 'burrito', price: 5}
+	let(:phone_order) {double :order, empty?: true}
 	let(:customer) {double :customer, phone_number: 7777}
 
 	it "should provide a list of customers" do
@@ -29,7 +30,7 @@ describe Takeaway do
 	end
 
 	it "should raise an error if the order is empty" do
-		expect{ takeaway.placing_order(7777,order) }.to raise_error("RuntimeError")
+		expect{ takeaway.placing_order(7777,phone_order) }.to raise_error("RuntimeError")
 	end
 
 	it "will check if the customer dishes are in the menu" do
@@ -37,6 +38,20 @@ describe Takeaway do
 		takeaway.dish_in_menu?(paella)
 	end
 
+	it "will create a object order with all the lineitems received from the customer" do
+		customer_order = {paella => 2, burrito => 3}
+		takeaway.menu << paella
+		takeaway.menu << burrito
+		expect(takeaway.create_order(customer_order).list.size).to be 2
+	end
+
+	it "will calculate the total of the order" do
+		customer_order = {paella => 2, burrito => 3}
+		takeaway.menu << paella
+		takeaway.menu << burrito
+		order = takeaway.create_order(customer_order)
+		expect(takeaway.order_total(order)).to eq 45
+	end 
 
 
 
