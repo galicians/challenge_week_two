@@ -81,6 +81,4 @@ describe Takeaway do
 	end
 
 
-
-
 end
