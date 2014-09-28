@@ -1,13 +1,13 @@
 class Array
 
-	def inject_using_iterators(memo=0)
-		self.each {|element| memo += element}
+	def inject_using_iterators(memo=0,&blk)
+		self.each do |x|
+			memo = yield memo,x
+		end
 		memo
 	end
 
-	def inject_using_recursion!(memo=0)
-		return memo if self.size == 0
-		memo = memo + inject_using_recursion!(self.pop)
-	end
-
 end
+
+
+

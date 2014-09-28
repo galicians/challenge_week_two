@@ -2,17 +2,17 @@ require 'task_one'
 
 describe Array do
 
-	array = [*1..5]
+	array = [0,5,7,9]
 
-	it "method duplicating inject using iterators" do
-		expect(array.inject_using_iterators).to eq 15
-		expect(array.inject_using_iterators(10)).to eq 25
+	it "inject should raise an error when it does not called by []" do
+		expect{ 7.inject_using_iterators }.to raise_error
 	end
 
-	it "method duplicating inject using recursion" do
-		expect(array.inject_using_recursion!).to eq 15
-		expect([*1..5].inject_using_recursion!(10)).to eq 25
+	it "inject should return the the result of the block" do
+	 	expect(array.inject_using_iterators {|memo,x| x * x }).to eq 81
 	end
 
-
+	it "inject should accept an accumulator as a parameter" do
+		expect(array.inject_using_iterators(5){|memo,x| memo += x }).to eq 26
+	end
 end
