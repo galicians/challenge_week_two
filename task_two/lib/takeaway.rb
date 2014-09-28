@@ -53,7 +53,7 @@ class Takeaway
 	end
 
 	def send_sms(message,phone_number)
-		@sender.send(message,phone_number)
+		@sender.send_message(message,phone_number)
 	end
 
 end
