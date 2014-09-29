@@ -12,8 +12,8 @@ describe Takeaway do
 	let(:sender) {double :message, body: 'message',number: 121}
 
 	def menu_update
-		takeaway.menu << paella
-		takeaway.menu << burrito
+		takeaway.menu.add_dish(paella)
+		takeaway.menu.add_dish(burrito)
 	end
 
 
@@ -23,8 +23,8 @@ describe Takeaway do
 	end
 
 	it "should provide a list dishes and prices" do
-		takeaway.menu << paella
-		expect(takeaway.menu).to eq [paella]
+		takeaway.menu.add_dish(paella)
+		expect(takeaway.menu.list).to eq [paella]
 	end
 
 	it "should identify if the number of the incoming call belongs to an existing customer" do
@@ -42,7 +42,7 @@ describe Takeaway do
 	end
 
 	it "will check if the customer dishes are in the menu" do
-		takeaway.menu << paella
+		takeaway.menu.add_dish(paella)
 		takeaway.dish_in_menu?(paella)
 	end
 
