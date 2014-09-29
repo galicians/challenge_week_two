@@ -10,7 +10,7 @@ class Takeaway
 
 	def initialize
 		@customers = []
-		@menu = []
+		@menu
 		@sender
 	end
 
@@ -18,6 +18,7 @@ class Takeaway
 		customer = customer_identification(phone_number)
 		raise 'RuntimeError' if phone_order.empty?
 		customer.orders << create_order(phone_order)
+		puts customer.orders.inspect
 		customize_message(customer)
 	end
 
@@ -33,7 +34,7 @@ class Takeaway
 	end
 	
 	def dish_in_menu?(dish)
-		@menu.include?(dish)
+		@menu.list.include?(dish)
 	end
 	
 	def create_order(phone_order)

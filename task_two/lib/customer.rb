@@ -7,9 +7,9 @@ class Customer
 	attr_accessor :phone_number,:name,:address,:orders
 
 
-	def initialize(number)
+	def initialize(name = '',number)
 		@phone_number = number
-		@name = ''
+		@name = name
 		@address = ''
 		@orders = []
 	end

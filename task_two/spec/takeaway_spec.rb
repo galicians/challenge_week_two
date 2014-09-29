@@ -66,7 +66,7 @@ describe Takeaway do
 		# allow(pablo).to receive(:orders)
 		expect(pablo).to receive(:orders)
 		takeaway.sender = sender
-		expect(sender).to receive(:send)
+		expect(sender).to receive(:send_message)
 		takeaway.placing_order(2222,customer_order)
 		# expect(pablo).to receive(:orders)
 	end
@@ -75,7 +75,7 @@ describe Takeaway do
 		customer_order = {paella => 2, burrito => 3}
 		menu_update
 		takeaway.sender = sender
-		expect(sender).to receive(:send)
+		expect(sender).to receive(:send_message)
 		# allow(sender1).to receive(:message,:number)
 		takeaway.placing_order(1100,customer_order)
 	end
