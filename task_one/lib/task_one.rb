@@ -12,14 +12,25 @@ class Array
 		memo
 	end
 
-	def inject_recursion(memo=0,&blk)
+	def inject_recursion(memo='a',&blk)
 		return memo if empty?
+		return self.slice(1,self.size).inject_recursion(first,&blk) if 'a'
 		memo = yield memo,first
-		shift
-		inject_recursion(memo,&blk)
+		self.slice(1,self.size).inject_recursion(memo,&blk)
+	end
+
+
+	def inject_nil(memo=nil,&blk)
+		array = self.clone
+		if !memo
+			memo = first
+			array.shift
+		end
+		array.each do |x|
+			memo = yield memo,x
+		end
+		memo
 	end
 
 end
-
-
 
